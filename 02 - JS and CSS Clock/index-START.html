@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS + CSS Clock</title>
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <title>JS + CSS Clock</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
 
 
     <div class="clock">
@@ -17,7 +17,7 @@
     </div>
 
 
-  <style>
+    <style>
     html {
       background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
       background-size: cover;
@@ -63,13 +63,40 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: all 0.5s;
+      transition-timing-function: cubic-bezier(0.35, 1.37, 1, 0.86);
     }
 
   </style>
 
   <script>
 
+    const secondHand = document.querySelector(".second-hand")
+    const minuteHand = document.querySelector(".min-hand")
+    const hourHand = document.querySelector(".hour-hand")
 
+    function setDate() {
+      const now = new Date()
+      const second = now.getSeconds()
+      const minute = now.getMinutes()
+      const hour = now.getHours()
+
+      const secondDegree = ((second/60) * 360) + 90   // +90 because we offset it in .hand in css
+      const minuteDegree = ((minute/60) * 360) + 90
+      const hourDegree = ((hour/12) * 360) + 90
+
+      if(secondDegree == 360 + 90) {
+        secondHand.style.transform = none
+      } else {
+        secondHand.style.transform = `rotate(${secondDegree}deg)`
+      }
+      minuteHand.style.transform = `rotate(${minuteDegree}deg)`
+      hourHand.style.transform = `rotate(${hourDegree}deg)`
+    }
+
+      setInterval(setDate, 1000)
   </script>
-</body>
+  </body>
 </html>
